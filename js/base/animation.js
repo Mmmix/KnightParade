@@ -19,46 +19,31 @@ export default class Animation {
   init() {
     this.standFrames = []
     this.moveFrames = []
-    for (var i in this.atlasTexture) {
-      var texture = this.atlasTexture[i];
-      if (this.roleType == texture.name) {
-        this.atlasTexture = texture
-        for (var j in this.frameNames.stand) {
-          for (var k in texture.frames) {
-            var frame = texture.frames[k]
-            if (this.frameNames.stand[j] == frame.name) {
-              this.standFrames.push({
-                sX: frame.x,
-                sY: frame.y,
-                sW: frame.width,
-                sH: frame.height,
-                offsetX: frame.offsetX,
-                offsetY: frame.offsetY,
-                width: frame.width,
-                height: frame.height
-              })
-            }
-          }
-        }
-        for (var j in this.frameNames.move) {
-          for (var k in texture.frames) {
-            var frame = texture.frames[k]
-            if (this.frameNames.move[j] == frame.name) {
-              this.moveFrames.push({
-                sX: frame.x,
-                sY: frame.y,
-                sW: frame.width,
-                sH: frame.height,
-                offsetX: frame.offsetX,
-                offsetY: frame.offsetY,
-                width : frame.width,
-                height: frame.height
-              })
-            }
-          }
-        }
-        break;
-      }
+    for (var i in this.frameNames.stand) {
+      var frame = this.atlasTexture[this.roleType].frames[this.frameNames.stand[i]]
+      this.standFrames.push({
+        sX: frame.x,
+        sY: frame.y,
+        sW: frame.width,
+        sH: frame.height,
+        offsetX: frame.offsetX,
+        offsetY: frame.offsetY,
+        width: frame.width,
+        height: frame.height
+      })
+    }
+    for (var i in this.frameNames.move) {
+      var frame = this.atlasTexture[this.roleType].frames[this.frameNames.move[i]]
+      this.moveFrames.push({
+        sX: frame.x,
+        sY: frame.y,
+        sW: frame.width,
+        sH: frame.height,
+        offsetX: frame.offsetX,
+        offsetY: frame.offsetY,
+        width: frame.width,
+        height: frame.height
+      })
     }
     this.status = 'Stand'
     this.frames = this.standFrames
@@ -93,7 +78,7 @@ export default class Animation {
 
   //更新
   update(timeElapsed, status = 'Stand') {
-    if (this.status != status){
+    if (this.status != status) {
       this.changeStatus()
     }
     this.age = this.age + timeElapsed
@@ -104,9 +89,9 @@ export default class Animation {
   // 渲染
   render(ctx, x, y, dirction, width = 0, height = 0) {
 
-    this.currentFrame.sY = dirction * this.atlasTexture.maxFrameHeight
-    this.currentFrame.destX = /*parseInt(this.currentFrame.offsetX) +*/ x - this.currentFrame.width/2
-    this.currentFrame.destY = parseInt(this.currentFrame.offsetY) + y-this.currentFrame.height/2
+    this.currentFrame.sY = dirction * this.atlasTexture[this.roleType].maxFrameHeight
+    this.currentFrame.destX = x - this.currentFrame.width / 2
+    this.currentFrame.destY = y - this.currentFrame.height / 2
     ctx.drawImage(
       this.atlasImg,
       this.currentFrame.sX,
