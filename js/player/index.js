@@ -2,6 +2,7 @@
 import Util from '../common/Util'
 import Animation from '../base/animation'
 import GameInfo from '../runtime/gameinfo'
+import Config from '../common/Config.js'
 
 
 const screenWidth = window.innerWidth
@@ -44,7 +45,8 @@ export default class Player { //TEMP
     this.destY = this.y
 
     this.status = "Stand"
-    this.currDirection = 0
+    this.currDirection = Config.Direction.E
+    console.log(this.currDirection)
 
     this.util = new Util() //TEMP
 
@@ -135,12 +137,12 @@ export default class Player { //TEMP
   //点击坐标是否在区域内
 
   isInActiveArea(testx, testy) {
-    if (testx < 0 || testx > 680 || testy < 60 || testy > 390) { //IMPROVE:....
+    if (testx < 10 || testx > 660 || testy < 60 || testy > 370) { //IMPROVE:....
       return false
     }
 
-    let vertx = [0, 140, 680, 680, 400, 250, 0]
-    let verty = [60, 60, 260, 390, 390, 200, 190]
+    let vertx = [10, 140, 660, 660, 400, 250, 10]
+    let verty = [60, 60, 260, 370, 370, 200, 190]
     let i = 0
     let j = 0
     let nvert = 7
@@ -156,8 +158,8 @@ export default class Player { //TEMP
   //路径是否超出边界
 
   isCrossActiveArea(testx, testy, x, y) {
-    let vertx = [320, 250, 0]
-    let verty = [320, 200, 190]
+    let vertx = [400, 250, 0]
+    let verty = [390, 200, 190]
 
     if (((testx > 250) != (x > 250)) &&
       (vertx[0] < (x - testx) * (verty[0] - testy) / (y - testy) + testx) &&
@@ -189,6 +191,8 @@ export default class Player { //TEMP
       this.status = "Move"
       if (this.isCrossActiveArea(xMouse, yMouse, this.x, this.y)) {
         this.isFindWay = true
+      }else{
+        this.isFindWay = false
       }
     } else {
       if (xMouse >= GameInfo.icPaladinArea.startX &&

@@ -26,6 +26,18 @@ export default class GameInfo {
     ctx.fillStyle = "#ffffff"
     ctx.font = "20px Arial"
 
+    let vertx = [10, 140, 660, 660, 400, 250, 10,10]
+    let verty = [60, 60, 260, 370, 370, 200, 190,60]
+
+    ctx.beginPath()
+    ctx.lineWidth = "2";
+    ctx.moveTo(10,60)
+    for(var i=1;i<vertx.length;i++){
+      ctx.lineTo(vertx[i],verty[i])
+    }
+    ctx.stroke(); // 进行绘制
+
+
     ctx.fillText(
       player.x,
       10,
