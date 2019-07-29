@@ -1,8 +1,3 @@
-import Sprite from './sprite'
-import DataBus from '../databus'
-
-let databus = new DataBus()
-
 /**
  * 简易的帧动画类实现
  */
@@ -38,7 +33,9 @@ export default class Animation {
                 sW: frame.width,
                 sH: frame.height,
                 offsetX: frame.offsetX,
-                offsetY: frame.offsetY
+                offsetY: frame.offsetY,
+                width: frame.width,
+                height: frame.height
               })
             }
           }
@@ -76,12 +73,12 @@ export default class Animation {
   }
 
   finish() {
-    this.age = this.count / this.interval
+    this.age = this.count * this.interval
     this.index = this.count
   }
 
   isFinished() {
-    return this.age * this.interval >= this.count
+    return this.age / this.interval >= this.count
   }
 
   changeStatus() {
@@ -95,20 +92,21 @@ export default class Animation {
   }
 
   //更新
-  update(time, status = 'Stand') {
+  update(timeElapsed, status = 'Stand') {
     if (this.status != status){
       this.changeStatus()
     }
-    this.age = this.age + time
-    this.index = Math.floor(this.age * this.interval) % this.count
+    this.age = this.age + timeElapsed
+    this.index = Math.floor(this.age / this.interval) % this.count
     this.currentFrame = this.frames[this.index]
   }
 
   // 渲染
   render(ctx, x, y, dirction, width = 0, height = 0) {
+
     this.currentFrame.sY = dirction * this.atlasTexture.maxFrameHeight
-    this.currentFrame.destX = parseInt(this.currentFrame.offsetX) + x
-    this.currentFrame.destY = parseInt(this.currentFrame.offsetY) + y
+    this.currentFrame.destX = parseInt(this.currentFrame.offsetX) + x - this.currentFrame.width/2
+    this.currentFrame.destY = parseInt(this.currentFrame.offsetY) + y-this.currentFrame.height/2
     ctx.drawImage(
       this.atlasImg,
       this.currentFrame.sX,

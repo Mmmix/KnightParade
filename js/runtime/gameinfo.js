@@ -7,7 +7,22 @@ let swordman = new Image()
 swordman.src = 'images/ic_swordman.png'
 
 export default class GameInfo {
-  renderPlayer(ctx, player) {
+  renderPlayer(ctx) {
+    ctx.drawImage(
+      paladin,
+      20,
+      screenHeight - 80,
+      45, 60
+    )
+    ctx.drawImage(
+      swordman,
+      80,
+      screenHeight - 80,
+      45, 60
+    )
+  }
+
+  renderDebug(ctx,player){
     ctx.fillStyle = "#ffffff"
     ctx.font = "20px Arial"
 
@@ -25,20 +40,6 @@ export default class GameInfo {
       player.currDirection,
       300,
       30
-    )
-
-
-    ctx.drawImage(
-      paladin,
-      20,
-      screenHeight - 80,
-      45, 60
-    )
-    ctx.drawImage(
-      swordman,
-      80,
-      screenHeight - 80,
-      45, 60
     )
   }
   onTouchEvent(xMouse,yMouse,player){
