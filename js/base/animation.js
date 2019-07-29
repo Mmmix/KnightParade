@@ -105,7 +105,7 @@ export default class Animation {
   render(ctx, x, y, dirction, width = 0, height = 0) {
 
     this.currentFrame.sY = dirction * this.atlasTexture.maxFrameHeight
-    this.currentFrame.destX = parseInt(this.currentFrame.offsetX) + x - this.currentFrame.width/2
+    this.currentFrame.destX = /*parseInt(this.currentFrame.offsetX) +*/ x - this.currentFrame.width/2
     this.currentFrame.destY = parseInt(this.currentFrame.offsetY) + y-this.currentFrame.height/2
     ctx.drawImage(
       this.atlasImg,
